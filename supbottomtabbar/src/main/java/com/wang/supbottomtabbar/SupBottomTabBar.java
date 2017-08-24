@@ -10,6 +10,8 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -71,12 +73,25 @@ public class SupBottomTabBar extends LinearLayout implements View.OnClickListene
         unselectdrawableList.add(unselectdrawable);
         mFragment.add(fragment);
         LinearLayout TabItem = (LinearLayout) View.inflate(mContext, R.layout.item_tar, null);
-        TabItem.setGravity(Gravity.CENTER);
         //设置TabItem标记
         TabItem.setTag(name);
+        TabItem.setGravity(Gravity.CENTER);
         //添加标记至集合以作辨别
         tabIdList.add(String.valueOf(TabItem.getTag()));
         TabItem.setOnClickListener(this);
+        ImageView tab_item_img = (ImageView)TabItem.findViewById(R.id.tab_img);
+        TextView tab_item_tv = (TextView)TabItem.findViewById(R.id.tab_tv);
+        tab_item_tv.setText(name);
+        if(this.tabIdList.size() == 1) {
+            tab_item_tv.setTextColor(this.selectColor);
+            tab_item_img.setBackground(selectdrawable);
+        } else {
+            tab_item_tv.setTextColor(this.unSelectColor);
+            tab_item_img.setBackground(unselectdrawable);
+        }
+        TabItem.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f));
+       mTabContent.addView(TabItem);
+
       return  this;
     }
 
